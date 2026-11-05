@@ -1,0 +1,198 @@
+'use client'
+
+import Link from 'next/link'
+import Image from 'next/image'
+import { usePathname, useRouter } from 'next/navigation'
+import { useState } from 'react'
+
+const topItems = [
+  { href: '/', label: 'Dashboard', icon: '📊' },
+]
+
+// Étapes de l'entonnoir (les prospects descendent et peuvent remonter)
+const funnelItems = [
+  { href: '/leads', label: 'Prospects', icon: '👥' },
+  { href: '/show-up', label: 'RDV & Relances', icon: '📅' },
+]
+
+const bottomItems = [
+  { href: '/agenda', label: 'Agenda', icon: '🗓️' },
+  { href: '/rapport', label: 'Rapport', icon: '📋' },
+  { href: '/commissions', label: 'Commission Bonus', icon: '💶' },
+  { href: '/rentabilite', label: 'Rentabilité', icon: '📈' },
+  { href: '/reglages', label: 'Réglages', icon: '⚙️' },
+]
+
+// Nav mobile : les 4 onglets du quotidien, le reste derrière « Plus »
+const mobileMain = [
+  { href: '/', label: 'Dashboard', icon: '📊' },
+  { href: '/leads', label: 'Prospects', icon: '👥' },
+  { href: '/show-up', label: 'RDV', icon: '📅' },
+  { href: '/agenda', label: 'Agenda', icon: '🗓️' },
+]
+const mobilePlus = [
+  { href: '/rapport', label: 'Rapport', icon: '📋' },
+  { href: '/commissions', label: 'Commission Bonus', icon: '💶' },
+  { href: '/rentabilite', label: 'Rentabilité', icon: '📈' },
+  { href: '/reglages', label: 'Réglages', icon: '⚙️' },
+]
+
+function NavLink({ item, active }: { item: { href: string; label: string; icon: string }; active: boolean }) {
+  return (
+    <Link
+      href={item.href}
+      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+        active
+          ? 'text-[#f8ef9c] bg-[#f8ef9c]/10'
+          : 'text-zinc-400 hover:text-white hover:bg-zinc-800'
+      }`}
+    >
+      <span>{item.icon}</span>
+      {item.label}
+    </Link>
+  )
+}
+
+export default function Navbar() {
+  const pathname = usePathname()
+  const router = useRouter()
+  const [loggingOut, setLoggingOut] = useState(false)
+  const [logoError, setLogoError] = useState(false)
+  const [plusOpen, setPlusOpen] = useState(false)
+
+  async function handleLogout() {
+    setLoggingOut(true)
+    await fetch('/api/auth/logout', { method: 'POST' })
+    router.push('/login')
+  }
+
+  return (
+    <>
+      {/* Desktop sidebar */}
+      <aside className="hidden md:flex flex-col w-56 bg-[#0d0d0d] border-r border-zinc-800 min-h-screen px-4 py-6">
+        <div className="mb-8 flex items-center gap-3">
+          {!logoError ? (
+            <Image
+              src="/logo.png"
+              alt="La Salle CrossFit"
+              width={44}
+              height={44}
+              className="shrink-0"
+              onError={() => setLogoError(true)}
+            />
+          ) : null}
+          <div>
+            <p className="font-display text-xl text-white leading-none">La Salle <span className="text-[#f8ef9c]">CrossFit</span></p>
+            <p className="text-xs text-zinc-500 mt-0.5">CRM Prospects</p>
+          </div>
+        </div>
+
+        <nav className="flex flex-col gap-1 flex-1">
+          {topItems.map((item) => (
+            <NavLink key={item.href} item={item} active={pathname === item.href} />
+          ))}
+
+          {/* Entonnoir */}
+          <div className="mt-5 mb-1 px-3 flex items-center gap-2">
+            <span className="text-[10px] font-bold tracking-widest text-zinc-600 uppercase">
+              Entonnoir
+            </span>
+            <span className="text-[10px] text-zinc-600">▼ ▲</span>
+          </div>
+
+          <div className="relative pl-3">
+            {/* ligne verticale de l'entonnoir */}
+            <div className="absolute left-[7px] top-3 bottom-3 w-px bg-zinc-700" />
+            <div className="flex flex-col gap-1">
+              {funnelItems.map((item, i) => (
+                <div key={item.href} className="relative">
+                  {/* puce sur la ligne */}
+                  <span className="absolute -left-3 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-zinc-600" />
+                  <NavLink item={item} active={pathname === item.href} />
+                  {i < funnelItems.length - 1 && (
+                    <div className="text-zinc-600 text-xs pl-3 -my-0.5">↓</div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <p className="px-3 mt-1.5 text-[10px] text-zinc-600 leading-tight">
+            Les prospects descendent — et peuvent remonter (RDV repris).
+          </p>
+
+          <div className="mt-5">
+            {bottomItems.map((item) => (
+              <NavLink key={item.href} item={item} active={pathname === item.href} />
+            ))}
+          </div>
+        </nav>
+
+        <button
+          onClick={handleLogout}
+          disabled={loggingOut}
+          className="mt-4 flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-zinc-500 hover:text-white hover:bg-zinc-800 transition-colors w-full text-left"
+        >
+          <span>🚪</span>
+          {loggingOut ? 'Déconnexion...' : 'Déconnexion'}
+        </button>
+      </aside>
+
+      {/* Mobile : panneau « Plus » */}
+      {plusOpen && (
+        <>
+          <div className="md:hidden fixed inset-0 z-40 bg-black/30" onClick={() => setPlusOpen(false)} />
+          <div className="md:hidden fixed bottom-16 left-0 right-0 z-50 bg-[#0d0d0d] border-t border-zinc-800 rounded-t-2xl px-4 pt-4 pb-2 shadow-2xl">
+            {mobilePlus.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setPlusOpen(false)}
+                className={`flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium ${
+                  pathname === item.href ? 'text-[#f8ef9c] bg-[#f8ef9c]/10' : 'text-zinc-300'
+                }`}
+              >
+                <span className="text-xl">{item.icon}</span>
+                {item.label}
+              </Link>
+            ))}
+            <button
+              onClick={handleLogout}
+              disabled={loggingOut}
+              className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-zinc-400 w-full text-left"
+            >
+              <span className="text-xl">🚪</span>
+              {loggingOut ? 'Déconnexion...' : 'Déconnexion'}
+            </button>
+          </div>
+        </>
+      )}
+
+      {/* Mobile bottom nav */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#0d0d0d] border-t border-zinc-800 flex h-16">
+        {mobileMain.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            onClick={() => setPlusOpen(false)}
+            className={`flex-1 flex flex-col items-center justify-center text-[11px] font-medium transition-colors ${
+              pathname === item.href ? 'text-[#f8ef9c]' : 'text-zinc-500'
+            }`}
+          >
+            <span className="text-xl mb-0.5">{item.icon}</span>
+            {item.label}
+          </Link>
+        ))}
+        <button
+          onClick={() => setPlusOpen(o => !o)}
+          className={`flex-1 flex flex-col items-center justify-center text-[11px] font-medium ${
+            plusOpen || mobilePlus.some(i => i.href === pathname) ? 'text-[#f8ef9c]' : 'text-zinc-500'
+          }`}
+        >
+          <span className="text-xl mb-0.5">⋯</span>
+          Plus
+        </button>
+      </nav>
+    </>
+  )
+}

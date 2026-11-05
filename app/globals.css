@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@400;700;900&display=swap');
+@import "tailwindcss";
+
+:root {
+  --bg: #F6F6F7;
+  --bg-card: #FFFFFF;
+  --bg-hover: #FAFAFA;
+  --border: #ECECEC;
+  /* Charte La Salle CrossFit : noir + jaune pâle, Bebas Neue (titres) + Lato */
+  --noir: #0d0d0d;
+  --yellow: #f8ef9c;
+  --yellow-dim: rgba(248, 239, 156, 0.35);
+  --yellow-edge: #d9cb4a; /* bordures sur fond clair */
+  --gold: #7d7212;        /* texte « jaune » lisible sur fond clair */
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg);
+  color: #0d0d0d;
+  font-family: 'Lato', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+h2, h3 {
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+}
+
+/* Titres de page en Bebas Neue (police d'affiche de la box, une seule graisse) */
+h1, .font-display {
+  font-family: 'Bebas Neue', 'Lato', sans-serif;
+  font-weight: 400 !important;
+  letter-spacing: 0.03em !important;
+  line-height: 1.05;
+}
+h1.text-2xl, h1.text-3xl { font-size: 2.25rem; }
+
+.label-condensed {
+  font-family: 'Lato', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.68rem;
+  color: #8a8a8a;
+}
+
+.input-field {
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #E2E2E2;
+  border-radius: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.9rem;
+  font-family: 'Lato', sans-serif;
+  color: #111;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.input-field::placeholder {
+  color: #b3b3b3;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #f8ef9c;
+  box-shadow: 0 0 0 3px rgba(217, 203, 74, 0.25);
+}
+
+.btn-primary {
+  background-color: #f8ef9c;
+  color: #111;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  border-radius: 0.75rem;
+  padding: 0.65rem 1.3rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  transition: background-color 0.15s, box-shadow 0.15s, transform 0.1s;
+}
+
+.btn-primary:hover { background-color: #efe27a; box-shadow: 0 2px 8px rgba(217, 203, 74, 0.45); }
+.btn-primary:active { transform: translateY(1px); }
+.btn-primary:disabled { opacity: 0.5; box-shadow: none; }
+
+@keyframes slideup {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes blink-warn {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+.blink-warn {
+  animation: blink-warn 0.9s ease-in-out infinite;
+}
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; color: black; }
+  .print-white { background: white !important; color: black !important; }
+}

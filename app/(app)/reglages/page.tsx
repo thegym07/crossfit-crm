@@ -1,0 +1,37 @@
+import { getReglages } from '@/lib/reglages'
+import { getCoaches } from '@/lib/agenda'
+import { adresseSalle, emailConfigure } from '@/lib/email'
+import { EmailProspects, EmailCoachs, AjouterContact } from './ReglagesClient'
+
+export const dynamic = 'force-dynamic'
+
+export default async function ReglagesPage() {
+  const [reglages, coaches] = await Promise.all([getReglages(), getCoaches()])
+  const configure = emailConfigure()
+
+  return (
+    <div className="p-4 md:p-8 max-w-2xl mx-auto space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold text-gray-900">
+          ⚙️ Réglages
+        </h1>
+        <p className="text-gray-500 text-sm mt-1">Notifications par e-mail (gratuites) : active ou coupe quand tu veux.</p>
+      </div>
+
+      {!configure && (
+        <div className="rounded-xl border-2 border-[#d9cb4a] bg-yellow-50 p-4 text-sm text-gray-800">
+          ⚠ <strong>Envoi d’e-mails pas encore branché.</strong> Les réglages s’enregistrent, mais aucun e-mail ne partira
+          tant que la boîte contact@ de la box n’est pas connectée.
+        </div>
+      )}
+
+      <EmailProspects initial={reglages.emailProspects} />
+      <EmailCoachs
+        initial={reglages.emailCoachRdv}
+        coaches={coaches.map(c => ({ id: c.id, nom: c.nom, couleur: c.couleur, email: c.email ?? '' }))}
+      />
+
+      <AjouterContact adresse={adresseSalle()} />
+    </div>
+  )
+}
