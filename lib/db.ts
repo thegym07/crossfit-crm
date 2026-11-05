@@ -1,5 +1,6 @@
 import { supabase } from './supabaseServer'
 import type { Lead } from './supabase'
+import { normaliserEmail, normaliserTel } from './telephone'
 
 const TABLE = 'leads'
 
@@ -15,6 +16,9 @@ function pickWritable(data: Partial<Lead>): Partial<Lead> {
   for (const key of WRITABLE) {
     if (key in data) out[key] = data[key]
   }
+  // Téléphone et e-mail toujours au même format (clé de l'anti-doublon)
+  if ('telephone' in out) out.telephone = normaliserTel(out.telephone as string | null)
+  if ('email' in out) out.email = normaliserEmail(out.email as string | null)
   return out as Partial<Lead>
 }
 
@@ -43,8 +47,10 @@ export async function findLeadByPhoneOrEmail(
   email: string | null,
 ): Promise<Lead | null> {
   const filters: string[] = []
-  if (telephone) filters.push(`telephone.eq.${telephone}`)
-  if (email) filters.push(`email.eq.${email}`)
+  const tel = normaliserTel(telephone)
+  const mail = normaliserEmail(email)
+  if (tel) filters.push(`telephone.eq.${tel}`)
+  if (mail) filters.push(`email.ilike.${mail.replace(/[,()%_*]/g, '')}`)
   if (filters.length === 0) return null
 
   const { data, error } = await supabase

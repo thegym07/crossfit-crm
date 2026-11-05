@@ -30,7 +30,7 @@ export default function SuiviRelanceSelect({ leadId, value, nom }: { leadId: str
         body: JSON.stringify({ statut: 'Perdu', motif_relance: PREFIXE_PERTE + 'Pas intéressé', date_relance: null, suivi_relance: 'Perdu' }),
       })
       if (!res.ok) {
-        alert('Enregistrement impossible, réessayez.')
+        alert('Enregistrement impossible, réessaie.')
         setSaving(false)
         return
       }

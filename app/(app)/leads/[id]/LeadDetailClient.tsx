@@ -16,7 +16,7 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
 
   // Effacement réservé aux personnes qui le demandent (RGPD) ; sinon on classe « Perdu ».
   async function handleDelete() {
-    if (!confirm(`${lead.nom} a demandé l'effacement de ses données ?\nLa fiche sera supprimée définitivement (irréversible).\nSinon, utilisez plutôt « Perdu ».`)) return
+    if (!confirm(`${lead.nom} a demandé l'effacement de ses données ?\nLa fiche sera supprimée définitivement (irréversible).\nSinon, utilise plutôt « Perdu ».`)) return
     setDeleting(true)
     const res = await fetch(`/api/leads/${lead.id}?rgpd=1`, { method: 'DELETE' })
     if (!res.ok) {

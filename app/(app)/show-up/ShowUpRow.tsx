@@ -67,7 +67,7 @@ function ResultCell({ leadId, presence, onDone }: {
 
   if (presence === 'false') {
     return (
-      <span className="text-xs font-semibold px-2 py-1 rounded" style={{ background: '#f8ef9c', color: '#111' }}>
+      <span className="text-xs font-semibold px-2 py-1 rounded" style={{ background: '#f8ef9c', color: '#0d0d0d' }}>
         À relancer →
       </span>
     )
@@ -106,7 +106,11 @@ function ResultCell({ leadId, presence, onDone }: {
       disabled={saving}
       onChange={async (e) => {
         const v = e.target.value
-        if (v === 'Vendu') { setVenteEnCours(true); return }
+        if (v === 'Vendu') {
+          // Tarifs pas encore renseignés (lib/salle.ts) : la vente s'enregistre sans formule, à qualifier plus tard
+          if (FORMULES.length === 0) { setSaving(true); await putLead(leadId, { statut: 'Vendu', offre_souscrite: null }); onDone(); return }
+          setVenteEnCours(true); return
+        }
         if (v === 'À relancer' || v === 'Refus') {
           setSaving(true)
           await putLead(leadId, { statut: v })

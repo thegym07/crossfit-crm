@@ -132,7 +132,7 @@ export function SlotChip({ creneau, coach }: { creneau: Creneau; coach: Coach | 
 }
 
 // ── Gestion des coachs (ajout / retrait / URL iCal) ──
-const COULEURS = ['#f8ef9c', '#22c55e', '#3b82f6', '#ef4444', '#a855f7', '#f97316', '#14b8a6', '#ec4899']
+const COULEURS = ['#7d7212', '#22c55e', '#3b82f6', '#ef4444', '#a855f7', '#f97316', '#14b8a6', '#ec4899']
 
 export function GestionCoachs({ coaches, baseUrl }: { coaches: Coach[]; baseUrl: string }) {
   const router = useRouter()

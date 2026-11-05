@@ -67,7 +67,7 @@ ALTER TABLE commissions ENABLE ROW LEVEL SECURITY;
 CREATE TABLE IF NOT EXISTS coaches (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   nom TEXT NOT NULL,
-  couleur TEXT NOT NULL DEFAULT '#f8ef9c',
+  couleur TEXT NOT NULL DEFAULT '#7d7212',
   email TEXT,
   ical_token TEXT NOT NULL DEFAULT replace(gen_random_uuid()::text, '-', ''),
   actif BOOLEAN NOT NULL DEFAULT TRUE,

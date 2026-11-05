@@ -210,7 +210,7 @@ export function AjouterContact({ adresse }: { adresse: string }) {
         <div className="flex gap-2 flex-wrap mb-3">
           {([['iphone', '📱 iPhone (Mail)'], ['gmail-tel', '📱 App Gmail'], ['ordi', '💻 Ordinateur']] as const).map(([k, label]) => (
             <button key={k} type="button" onClick={() => setPlateforme(k)}
-              className={`px-3 py-1.5 rounded-full text-xs font-medium border ${plateforme === k ? 'bg-[#f8ef9c] text-black border-[#d9cb4a]' : 'bg-white text-gray-600 border-gray-300 hover:border-gray-500'}`}>
+              className={`px-3 py-1.5 rounded-full text-xs font-medium border ${plateforme === k ? 'bg-[#0d0d0d] text-[#f8ef9c] border-[#0d0d0d] font-semibold' : 'bg-white text-gray-600 border-gray-300 hover:border-gray-500'}`}>
               {label}
             </button>
           ))}

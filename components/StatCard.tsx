@@ -9,7 +9,7 @@ const colorMap = {
   blue:    'border-blue-200 bg-blue-50',
   green:   'border-green-200 bg-green-50',
   red:     'border-red-200 bg-red-50',
-  yellow:  'border-yellow-300 bg-yellow-50',
+  yellow:  'border-[#d9cb4a] bg-[#f8ef9c]/30',
   default: 'border-gray-200 bg-white',
 }
 
@@ -17,15 +17,15 @@ const valueColorMap = {
   blue:    'text-blue-600',
   green:   'text-green-600',
   red:     'text-red-600',
-  yellow:  'text-yellow-600',
+  yellow:  'text-[#7d7212]',
   default: 'text-gray-900',
 }
 
 export default function StatCard({ label, value, sub, color = 'default' }: StatCardProps) {
   return (
     <div className={`rounded-xl border p-4 ${colorMap[color]}`}>
-      <p className="text-xs text-gray-500 uppercase tracking-wide mb-1 font-semibold" style={{ fontFamily: 'Barlow Condensed, sans-serif', letterSpacing: '0.08em' }}>{label}</p>
-      <p className={`text-3xl font-bold ${valueColorMap[color]}`} style={{ fontFamily: 'Bebas Neue, sans-serif' }}>{value}</p>
+      <p className="label-condensed mb-1">{label}</p>
+      <p className={`font-display text-4xl ${valueColorMap[color]}`}>{value}</p>
       {sub && <p className="text-xs text-gray-400 mt-1">{sub}</p>}
     </div>
   )

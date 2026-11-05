@@ -3,6 +3,7 @@ import { createLead } from '@/lib/db'
 import { notifierNouveauProspect } from '@/lib/notifications'
 import { ACTIVITES } from '@/lib/salle'
 import type { Lead } from '@/lib/supabase'
+import { normaliserEmail, normaliserTel } from '@/lib/telephone'
 
 export async function POST(request: NextRequest) {
   let body: Record<string, string>
@@ -21,8 +22,8 @@ export async function POST(request: NextRequest) {
 
   const cree = await createLead({
     nom,
-    telephone: body.telephone?.trim() || null,
-    email: body.email?.trim() || null,
+    telephone: normaliserTel(body.telephone),
+    email: normaliserEmail(body.email),
     source: 'Formulaire web',
     activite,
     statut: 'Nouveau prospect',

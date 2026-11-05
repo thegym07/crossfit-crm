@@ -8,7 +8,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   const data = await request.json()
   if (!data.nom?.trim()) return NextResponse.json({ error: 'Nom obligatoire' }, { status: 400 })
-  const coach = await createCoach(data.nom.trim(), data.couleur || '#f8ef9c', data.email?.trim() || null)
+  const coach = await createCoach(data.nom.trim(), data.couleur || '#7d7212', data.email?.trim() || null)
   if (!coach) return NextResponse.json({ error: 'Création impossible' }, { status: 500 })
   return NextResponse.json(coach, { status: 201 })
 }

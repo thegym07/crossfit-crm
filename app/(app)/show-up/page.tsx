@@ -120,7 +120,7 @@ export default async function RdvRelancesPage({ searchParams }: { searchParams: 
             scroll={false}
             className={`px-4 py-2 rounded-xl text-sm font-semibold border transition-colors ${
               ongletRelance === 'rappeler'
-                ? 'bg-[#f8ef9c] text-black border-[#d9cb4a]'
+                ? 'bg-[#0d0d0d] text-[#f8ef9c] border-[#0d0d0d] font-semibold'
                 : 'bg-white text-gray-600 border-gray-300 hover:border-gray-500 hover:text-gray-900'
             }`}
           >
@@ -131,7 +131,7 @@ export default async function RdvRelancesPage({ searchParams }: { searchParams: 
             scroll={false}
             className={`px-4 py-2 rounded-xl text-sm font-semibold border transition-colors ${
               ongletRelance === 'post'
-                ? 'bg-[#f8ef9c] text-black border-[#d9cb4a]'
+                ? 'bg-[#0d0d0d] text-[#f8ef9c] border-[#0d0d0d] font-semibold'
                 : 'bg-white text-gray-600 border-gray-300 hover:border-gray-500 hover:text-gray-900'
             }`}
           >

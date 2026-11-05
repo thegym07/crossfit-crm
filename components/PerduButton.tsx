@@ -23,7 +23,7 @@ export default function PerduButton({ leadId, redirect, motifParDefaut }: {
       body: JSON.stringify({ statut: 'Perdu', motif_relance: PREFIXE_PERTE + motif, date_relance: null }),
     })
     if (!res.ok) {
-      alert('Enregistrement impossible, réessayez.')
+      alert('Enregistrement impossible, réessaie.')
       setSaving(false)
       return
     }

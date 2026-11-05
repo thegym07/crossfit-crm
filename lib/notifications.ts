@@ -53,7 +53,7 @@ export async function notifierEchecProspect(details: string[]): Promise<void> {
         ``,
         `Un prospect de la pub Meta n'a pas pu être enregistré dans le CRM (Meta ou la base de données ne répondait pas).`,
         `Meta va renvoyer la demande automatiquement. Si le prospect n'apparaît pas dans le CRM d'ici une heure,`,
-        `retrouvez-le dans le Centre de prospects Meta : https://business.facebook.com/latest/leads_center`,
+        `retrouve-le dans le Centre de prospects Meta : https://business.facebook.com/latest/leads_center`,
         ``,
         ...details.map(d => `• ${d}`),
         ``,

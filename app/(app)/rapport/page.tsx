@@ -104,7 +104,7 @@ export default async function RapportPage({ searchParams }: { searchParams: Prom
           auto={{ appels: auto.appels, joints: auto.joints }}
           enregistrerTout={!reportDuJour && auto.appels + auto.sms > 0} />
         <p className="text-xs text-gray-500 mt-2">
-          Compté par le CRM ce jour-là (boutons Pas répondu, A répondu, Relancé, SMS) : {auto.appels} appel{auto.appels !== 1 ? 's' : ''} · {auto.joints} personne{auto.joints !== 1 ? 's' : ''} jointe{auto.joints !== 1 ? 's' : ''} · {auto.sms} SMS. Ajoutez le nombre de RDV pris.
+          Compté par le CRM ce jour-là (boutons Pas répondu, A répondu, Relancé, SMS) : {auto.appels} appel{auto.appels !== 1 ? 's' : ''} · {auto.joints} personne{auto.joints !== 1 ? 's' : ''} jointe{auto.joints !== 1 ? 's' : ''} · {auto.sms} SMS. Ajoute le nombre de RDV pris.
         </p>
       </section>
 

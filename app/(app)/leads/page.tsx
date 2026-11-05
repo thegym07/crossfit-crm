@@ -115,7 +115,7 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
             <Link key={f.label} href={`/leads${f.value ? `?statut=${encodeURIComponent(f.value)}` : ''}`}
               className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${
                 active
-                  ? 'bg-[#f8ef9c] text-black border-[#d9cb4a]'
+                  ? 'bg-[#0d0d0d] text-[#f8ef9c] border-[#0d0d0d] font-semibold'
                   : 'border-gray-300 text-gray-600 hover:text-gray-900 hover:border-gray-500 bg-white'
               }`}>
               {f.label}{f.value === 'Perdu' && nbPerdus > 0 ? ` (${nbPerdus})` : ''}

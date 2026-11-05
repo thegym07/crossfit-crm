@@ -4,6 +4,7 @@ import { createLead, findLeadByPhoneOrEmail, updateLead } from '@/lib/db'
 import { notifierEchecProspect, notifierNouveauProspect } from '@/lib/notifications'
 import type { Lead } from '@/lib/supabase'
 import { META_PAGE_ID } from '@/lib/salle'
+import { normaliserEmail, normaliserTel } from '@/lib/telephone'
 
 const GRAPH_VERSION = 'v21.0'
 
@@ -73,8 +74,8 @@ export async function POST(request: NextRequest) {
     for (const change of entry.changes ?? []) {
       if (change.field !== 'leadgen') continue
       // Lead d'une autre page (ex. THE GYM) : pas pour ce CRM
-      const pageId = String(change.value?.page_id ?? entry.id ?? '')
-      if (pageId && pageId !== META_PAGE_ID) continue
+      const pageId = String(change.value?.page_id || entry.id || '')
+      if (pageId !== META_PAGE_ID) continue
       const leadgenId = String(change.value?.leadgen_id ?? '')
       if (!LEADGEN_ID.test(leadgenId)) continue // pas un vrai identifiant Meta : ignoré
       try {
@@ -102,7 +103,7 @@ async function graph<T>(chemin: string, token: string): Promise<T> {
     const texte = await res.text()
     const msg = `API Graph ${res.status} : ${texte.slice(0, 200)}`
     // Jeton expiré ou refusé (code 190) : à réparer, donc alerte ; identifiant inconnu : ignoré
-    const jetonRefuse = /"code":\s*(190|102)\b/.test(texte)
+    const jetonRefuse = /"code":\s*(190|102|10|200)\b/.test(texte) // jeton expiré, ou sans accès à la page / aux prospects
     throw res.status >= 500 || jetonRefuse ? new Error(msg) : new ErreurDefinitive(msg)
   }
   return res.json() as Promise<T>
@@ -147,7 +148,7 @@ async function traiterLead(leadgenId: string, value: MetaWebhookValue) {
     || fields.full_name?.trim()
     || 'Lead Meta'
   const telephone = normaliserTel(fields.phone_number ?? null)
-  const email = (fields.email ?? '').trim() || null
+  const email = normaliserEmail(fields.email)
 
   console.log(`[META WEBHOOK] 👤 Lead : nom="${nom}" tel="${telephone ?? '—'}" email="${email ?? '—'}"`)
 
@@ -210,14 +211,6 @@ function extraireChamps(fieldData: MetaFieldDatum[]): Record<string, string> {
   return out
 }
 
-function normaliserTel(tel: string | null): string | null {
-  if (!tel) return null
-  const t = tel.replace(/\s/g, '')
-  // +33612345678 -> 0612345678
-  if (t.startsWith('+33')) return '0' + t.slice(3)
-  if (t.startsWith('0033')) return '0' + t.slice(4)
-  return t
-}
 
 // ── Types ──
 type MetaFieldDatum = { name: string; values: string[] }

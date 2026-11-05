@@ -68,13 +68,14 @@ h1.text-2xl, h1.text-3xl { font-size: 2.25rem; }
 
 .input-field:focus {
   outline: none;
-  border-color: #f8ef9c;
-  box-shadow: 0 0 0 3px rgba(217, 203, 74, 0.25);
+  border-color: #d9cb4a;
+  box-shadow: 0 0 0 3px rgba(217, 203, 74, 0.45);
 }
 
 .btn-primary {
   background-color: #f8ef9c;
-  color: #111;
+  color: #0d0d0d;
+  border: 1px solid #d9cb4a;
   font-family: 'Lato', sans-serif;
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -86,7 +87,7 @@ h1.text-2xl, h1.text-3xl { font-size: 2.25rem; }
 
 .btn-primary:hover { background-color: #efe27a; box-shadow: 0 2px 8px rgba(217, 203, 74, 0.45); }
 .btn-primary:active { transform: translateY(1px); }
-.btn-primary:disabled { opacity: 0.5; box-shadow: none; }
+.btn-primary:disabled { opacity: 0.6; box-shadow: none; }
 
 @keyframes slideup {
   from { transform: translateY(100%); }
