@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "import-leads": "tsx scripts/import-leads.ts"
+    "start": "next start"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.2",

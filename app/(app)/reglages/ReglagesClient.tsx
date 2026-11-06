@@ -94,73 +94,6 @@ export function EmailProspects({ initial }: { initial: { actif: boolean; email: 
   )
 }
 
-// ── E-mail au coach à chaque nouveau RDV ──
-type CoachLite = { id: string; nom: string; couleur: string; email: string }
-
-export function EmailCoachs({ initial, coaches }: { initial: { actif: boolean }; coaches: CoachLite[] }) {
-  const [actif, setActif] = useState(initial.actif)
-  const [msg, setMsg] = useState<string | null>(null)
-
-  async function basculer(v: boolean) {
-    setActif(v)
-    const res = await sauver({ emailCoachRdv: { actif: v } })
-    if (!res.ok) { setActif(!v); setMsg(res.erreur ?? 'Erreur'); return }
-    setMsg(v ? '✓ Activé' : 'Désactivé')
-  }
-
-  return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm space-y-4">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="font-semibold text-gray-900">💪 E-mail au coach à chaque nouveau RDV</p>
-          <p className="text-sm text-gray-500 mt-0.5">
-            Quand un créneau est réservé, le coach reçoit tout de suite un e-mail : jour, heure, nom et téléphone de la cliente.
-          </p>
-        </div>
-        <Interrupteur actif={actif} onChange={basculer} />
-      </div>
-      {msg && <p className="text-xs text-gray-500">{msg}</p>}
-
-      <div className="border-t border-gray-100 pt-3 space-y-3">
-        <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">E-mail des coachs</p>
-        {coaches.length === 0 && <p className="text-sm text-gray-400">Aucun coach — ajoute-les dans l’onglet Agenda.</p>}
-        {coaches.map(c => <EmailCoach key={c.id} coach={c} />)}
-      </div>
-    </div>
-  )
-}
-
-function EmailCoach({ coach }: { coach: CoachLite }) {
-  const [mail, setMail] = useState(coach.email)
-  const [saved, setSaved] = useState(coach.email)
-  const [msg, setMsg] = useState<string | null>(null)
-
-  async function enregistrer() {
-    const res = await fetch(`/api/coaches/${coach.id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: mail }),
-    })
-    const data = await res.json().catch(() => null)
-    if (res.ok) { setSaved(mail); setMsg('✓') } else setMsg(data?.error ?? 'Erreur')
-  }
-
-  return (
-    <div className="flex items-center gap-2 flex-wrap">
-      <span className="w-3 h-3 rounded-full flex-shrink-0" style={{ background: coach.couleur }} />
-      <span className="text-sm font-medium text-gray-900 w-24">{coach.nom}</span>
-      <input value={mail} onChange={e => setMail(e.target.value)} placeholder="adresse@gmail.com" type="email" inputMode="email" className="input-field !w-56 text-sm" />
-      <button type="button" onClick={enregistrer} disabled={mail === saved}
-        className="text-xs px-3 py-1.5 rounded-lg border border-gray-300 bg-white text-gray-600 hover:text-gray-900 hover:border-gray-500 disabled:opacity-40">
-        Enregistrer
-      </button>
-      {saved && <BoutonTest email={saved} />}
-      {!saved && <span className="text-[11px] text-yellow-700">pas d’adresse → pas d’e-mail</span>}
-      {msg && <span className="text-xs text-gray-500">{msg}</span>}
-    </div>
-  )
-}
-
 // ── Guide : ajouter La Salle CrossFit aux contacts (pour ne jamais tomber en spam) ──
 export function AjouterContact({ adresse }: { adresse: string }) {
   const [copie, setCopie] = useState(false)
@@ -189,7 +122,7 @@ export function AjouterContact({ adresse }: { adresse: string }) {
       <div>
         <p className="font-semibold text-gray-900">📇 Important : ajouter La Salle CrossFit à ses contacts</p>
         <p className="text-sm text-gray-500 mt-0.5">
-          À faire <strong>une seule fois</strong> par la commerciale et par chaque coach. Une adresse enregistrée dans les contacts
+          À faire <strong>une seule fois</strong> par la personne qui reçoit les e-mails. Une adresse enregistrée dans les contacts
           est reconnue comme fiable par la messagerie : les notifications arrivent dans la boîte principale, pas en spam.
         </p>
       </div>

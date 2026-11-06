@@ -7,18 +7,12 @@ import CopyButton from '@/components/CopyButton'
 import InlineSelect from '@/components/InlineSelect'
 import InlineNotes from '@/components/InlineNotes'
 import InlineDateTime from '@/components/InlineDateTime'
-import CreneauInline from '@/components/CreneauPicker'
 import PerduButton from '@/components/PerduButton'
 import SmsButton from '@/components/SmsButton'
 import { smsRdv } from '@/lib/sms'
 import { FORMULES, type Lead } from '@/lib/supabase'
-import { ACTIVITE_COACH } from '@/lib/salle'
 
-// « Séance avec un coach » sans date : la date se choisit parmi les dispos coachs
 function DateCell({ lead }: { lead: Lead }) {
-  if (lead.activite === ACTIVITE_COACH && !lead.date_rdv) {
-    return <CreneauInline leadId={lead.id} />
-  }
   return <InlineDateTime leadId={lead.id} value={lead.date_rdv} />
 }
 

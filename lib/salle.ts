@@ -12,7 +12,7 @@ export const SALLE = {
   site: 'https://www.lasallecrossfit.fr',
 } as const
 
-/** Adresse publique du CRM (liens dans les e-mails, pages coachs, agenda). */
+/** Adresse publique du CRM (liens dans les e-mails). */
 export const CRM_URL = 'https://crm-lasallecrossfit.vercel.app'
 
 /** Page Facebook « La Salle CrossFit » : seuls ses leads Meta entrent ici. */
@@ -25,12 +25,9 @@ export const DEBUT_ACTIVITE = '2026-11' // début du calcul (mise en service du 
 
 // ── Commissions ──
 export const COMMISSION_PAR_RDV = 10   // € par RDV où le prospect était présent (vente ou non)
-export const COMMISSION_COACH = 30     // € par séance « avec un coach » réalisée (créneau de l'agenda coachs)
 
-// ── Activités proposées ──
-// ACTIVITE_COACH : le RDV se prend sur un créneau de l'agenda coachs (comme le plateau muscu de THE GYM).
-export const ACTIVITE_COACH = 'séance avec un coach'
-export const ACTIVITES = ['WOD (CrossFit)', 'Hyrox', 'ATHX', ACTIVITE_COACH] as const
+// ── Activités proposées ── (pas d'agenda coachs : onglet retiré à la demande de Vincent le 06/11/2026)
+export const ACTIVITES = ['WOD (CrossFit)', 'Hyrox', 'ATHX'] as const
 
 // ── Formules vendues ──
 // prix = montant unique, ou mensualité si duree > 1 (étalée sur la durée dans Rentabilité).

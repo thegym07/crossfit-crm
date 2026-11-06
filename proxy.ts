@@ -15,11 +15,7 @@ export function proxy(request: NextRequest) {
     pathname.startsWith('/api/auth') ||
     pathname.startsWith('/api/leads/meta') ||
     pathname.startsWith('/api/inscription') ||
-    pathname.startsWith('/api/cron') ||
-    pathname.startsWith('/api/calendar') ||
-    // Page perso des coachs : accès par lien secret (token), sans mot de passe
-    pathname.startsWith('/coach/') ||
-    pathname.startsWith('/api/coach/')
+    pathname.startsWith('/api/cron')
 
   if (!isPublicPath && !isAuthenticated) {
     // Les appels d'API reçoivent une vraie erreur (pas une page de connexion)

@@ -1,12 +1,11 @@
 import { getReglages } from '@/lib/reglages'
-import { getCoaches } from '@/lib/agenda'
 import { adresseSalle, emailConfigure } from '@/lib/email'
-import { EmailProspects, EmailCoachs, AjouterContact } from './ReglagesClient'
+import { EmailProspects, AjouterContact } from './ReglagesClient'
 
 export const dynamic = 'force-dynamic'
 
 export default async function ReglagesPage() {
-  const [reglages, coaches] = await Promise.all([getReglages(), getCoaches()])
+  const reglages = await getReglages()
   const configure = emailConfigure()
 
   return (
@@ -26,10 +25,6 @@ export default async function ReglagesPage() {
       )}
 
       <EmailProspects initial={reglages.emailProspects} />
-      <EmailCoachs
-        initial={reglages.emailCoachRdv}
-        coaches={coaches.map(c => ({ id: c.id, nom: c.nom, couleur: c.couleur, email: c.email ?? '' }))}
-      />
 
       <AjouterContact adresse={adresseSalle()} />
     </div>

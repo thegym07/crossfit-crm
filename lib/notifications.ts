@@ -2,7 +2,6 @@ import { getReglages } from './reglages'
 import { adresseSalle, envoyerEmail } from './email'
 import { CRM_URL, SALLE } from './salle'
 import type { Lead } from './supabase'
-import type { Coach, Creneau } from './agenda'
 
 // Notifications par e-mail, déclenchées selon l'onglet Réglages.
 // Ne lèvent jamais d'erreur : un e-mail raté ne doit pas bloquer l'arrivée d'un prospect ou une réservation.
@@ -62,40 +61,5 @@ export async function notifierEchecProspect(details: string[]): Promise<void> {
     )
   } catch (err) {
     console.error('[NOTIF] échec prospect :', err instanceof Error ? err.message : err)
-  }
-}
-
-
-/** Créneau réservé → e-mail au coach concerné. */
-export async function notifierCoachNouveauRdv(
-  coach: Coach | undefined,
-  creneau: Creneau,
-  lead: Pick<Lead, 'nom' | 'telephone'>,
-): Promise<void> {
-  try {
-    if (!coach?.email) return
-    const { emailCoachRdv } = await getReglages()
-    if (!emailCoachRdv.actif) return
-    const quand = new Date(creneau.debut).toLocaleString('fr-FR', {
-      weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris',
-    })
-    await envoyerEmail(
-      coach.email,
-      `Nouveau RDV ${SALLE.nom} : ${quand}`,
-      [
-        `Salut ${coach.nom},`,
-        ``,
-        `Tu as un nouveau RDV : ${quand}`,
-        `Avec : ${lead.nom}`,
-        lead.telephone ? `Téléphone : ${lead.telephone}` : null,
-        ``,
-        `Tous tes RDV : ${CRM}/coach/${coach.ical_token}`,
-        ``,
-        `Bonne séance !`,
-        SALLE.nom,
-      ].filter(l => l !== null).join('\n'),
-    )
-  } catch (err) {
-    console.error('[NOTIF] RDV coach :', err instanceof Error ? err.message : err)
   }
 }

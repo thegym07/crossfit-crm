@@ -3,7 +3,6 @@ import { getLeads } from '@/lib/db'
 import RapportForm from './RapportForm'
 import DateNav from './DateNav'
 import { lireContact } from '@/lib/appels'
-import { ACTIVITE_COACH } from '@/lib/salle'
 
 export const dynamic = 'force-dynamic'
 
@@ -73,11 +72,6 @@ export default async function RapportPage({ searchParams }: { searchParams: Prom
     ? { date: selectedDate, appels_passes: auto.appels, personnes_au_tel: auto.joints, rdv_pris: null, sms_envoyes: auto.sms > 0 }
     : null)
 
-  const seancesMuscu = leads.filter(l =>
-    l.activite === ACTIVITE_COACH && l.rdv_honore === true &&
-    l.date_rdv && jourFr(l.date_rdv) === selectedDate
-  )
-  const coachsDuJour = Array.from(new Set(seancesMuscu.map(s => s.coach_assigne).filter(Boolean)))
 
   const dateLabel = new Date(selectedDate + 'T00:00:00').toLocaleDateString('fr-FR', {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
@@ -108,15 +102,6 @@ export default async function RapportPage({ searchParams }: { searchParams: Prom
         </p>
       </section>
 
-      {/* Séances avec un coach */}
-      <div className="mb-8 rounded-xl border border-gray-200 bg-white px-4 py-3 shadow-sm flex items-center gap-3 text-sm">
-        <span>💪</span>
-        <span className="text-gray-600">Séances avec un coach :</span>
-        <span className="font-bold text-gray-900">{seancesMuscu.length}</span>
-        {coachsDuJour.length > 0 && (
-          <span className="text-xs text-gray-400">({coachsDuJour.join(', ')})</span>
-        )}
-      </div>
 
       {/* Bilan mensuel : total et moyenne par jour saisi */}
       {bilans.length > 0 && (

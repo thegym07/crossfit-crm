@@ -34,7 +34,7 @@ export async function GET() {
   return new Response('﻿' + lignes.join('\n'), {
     headers: {
       'Content-Type': 'text/csv; charset=utf-8',
-      'Content-Disposition': `attachment; filename="prospects-the-gym-${jour}.csv"`,
+      'Content-Disposition': `attachment; filename="prospects-la-salle-crossfit-${jour}.csv"`,
     },
   })
 }

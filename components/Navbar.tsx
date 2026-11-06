@@ -16,19 +16,19 @@ const funnelItems = [
 ]
 
 const bottomItems = [
-  { href: '/agenda', label: 'Agenda', icon: '🗓️' },
   { href: '/rapport', label: 'Rapport', icon: '📋' },
   { href: '/commissions', label: 'Commission Bonus', icon: '💶' },
   { href: '/rentabilite', label: 'Rentabilité', icon: '📈' },
   { href: '/reglages', label: 'Réglages', icon: '⚙️' },
+  { href: '/guide', label: 'Guide CRM', icon: '📖' },
 ]
 
-// Nav mobile : les 4 onglets du quotidien, le reste derrière « Plus »
+// Nav mobile : les 3 onglets du quotidien + le guide, le reste derrière « Plus »
 const mobileMain = [
   { href: '/', label: 'Dashboard', icon: '📊' },
   { href: '/leads', label: 'Prospects', icon: '👥' },
   { href: '/show-up', label: 'RDV', icon: '📅' },
-  { href: '/agenda', label: 'Agenda', icon: '🗓️' },
+  { href: '/guide', label: 'Guide', icon: '📖' },
 ]
 const mobilePlus = [
   { href: '/rapport', label: 'Rapport', icon: '📋' },
