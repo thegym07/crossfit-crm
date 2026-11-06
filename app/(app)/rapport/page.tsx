@@ -93,7 +93,7 @@ export default async function RapportPage({ searchParams }: { searchParams: Prom
       </div>
 
       {/* Saisie manuelle */}
-      <section className="mb-4">
+      <section data-visite="rapport" className="mb-4">
         <RapportForm key={selectedDate} date={selectedDate} initial={initialRapport}
           auto={{ appels: auto.appels, joints: auto.joints }}
           enregistrerTout={!reportDuJour && auto.appels + auto.sms > 0} />

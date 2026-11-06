@@ -67,7 +67,7 @@ export default async function CommissionsPage({ searchParams }: { searchParams: 
       </div>
 
       {/* Mois en cours */}
-      <div className="rounded-2xl border-2 border-[#d9cb4a] bg-white p-6 shadow-sm mb-8">
+      <div data-visite="commission-mois" className="rounded-2xl border-2 border-[#d9cb4a] bg-white p-6 shadow-sm mb-8">
         <p className="label-condensed mb-1">{moisLabel(moisCourant)} — mois en cours</p>
         <div className="flex items-end gap-3 flex-wrap">
           <p className="text-5xl font-bold text-gray-900" style={{ letterSpacing: '-0.03em' }}>

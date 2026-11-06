@@ -109,7 +109,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
       {/* À faire aujourd'hui */}
       <div className="space-y-6">
-        <div>
+        <div data-visite="rdv-du-jour">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-lg font-semibold text-gray-900">
               📅 RDV du jour
@@ -151,7 +151,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
           )}
         </div>
 
-        <div>
+        <div data-visite="dorment">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-lg font-semibold text-gray-900">
               😴 Prospects qui dorment

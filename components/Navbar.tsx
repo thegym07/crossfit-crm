@@ -20,7 +20,7 @@ const bottomItems = [
   { href: '/commissions', label: 'Commission Bonus', icon: '💶' },
   { href: '/rentabilite', label: 'Rentabilité', icon: '📈' },
   { href: '/reglages', label: 'Réglages', icon: '⚙️' },
-  { href: '/guide', label: 'Guide CRM', icon: '📖' },
+  { href: '/?visite=1', label: 'Guide CRM', icon: '📖' },
 ]
 
 // Nav mobile : les 3 onglets du quotidien + le guide, le reste derrière « Plus »
@@ -28,7 +28,7 @@ const mobileMain = [
   { href: '/', label: 'Dashboard', icon: '📊' },
   { href: '/leads', label: 'Prospects', icon: '👥' },
   { href: '/show-up', label: 'RDV', icon: '📅' },
-  { href: '/guide', label: 'Guide', icon: '📖' },
+  { href: '/?visite=1', label: 'Guide', icon: '📖' },
 ]
 const mobilePlus = [
   { href: '/rapport', label: 'Rapport', icon: '📋' },
@@ -69,7 +69,7 @@ export default function Navbar() {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden md:flex flex-col w-56 bg-[#0d0d0d] border-r border-zinc-800 min-h-screen px-4 py-6">
+      <aside data-visite="menu" className="hidden md:flex flex-col w-56 bg-[#0d0d0d] border-r border-zinc-800 min-h-screen px-4 py-6">
         <div className="mb-8 flex items-center gap-3">
           {!logoError ? (
             <Image
@@ -169,7 +169,7 @@ export default function Navbar() {
       )}
 
       {/* Mobile bottom nav */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#0d0d0d] border-t border-zinc-800 flex h-16">
+      <nav data-visite="menu" className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#0d0d0d] border-t border-zinc-800 flex h-16">
         {mobileMain.map((item) => (
           <Link
             key={item.href}

@@ -1,6 +1,7 @@
 import { supabase } from './supabaseServer'
 import type { Lead } from './supabase'
 import { normaliserEmail, normaliserTel } from './telephone'
+import { exemplesVisite, VISITE_COOKIE } from './exemples'
 
 const TABLE = 'leads'
 
@@ -32,7 +33,21 @@ export async function getLeads(): Promise<Lead[]> {
     .select('*')
     .order('created_at', { ascending: false })
   if (error) throw new Error(`getLeads: ${error.message}`)
-  return (data ?? []).map(normalize)
+  const leads = (data ?? []).map(normalize)
+  // Visite guidée en cours : on ajoute en mémoire les prospects d'exemple (jamais enregistrés)
+  if (await visiteEnCours()) {
+    return [...exemplesVisite(), ...leads].sort((x, y) => y.created_at.localeCompare(x.created_at))
+  }
+  return leads
+}
+
+async function visiteEnCours(): Promise<boolean> {
+  try {
+    const { cookies } = await import('next/headers')
+    return (await cookies()).get(VISITE_COOKIE)?.value === '1'
+  } catch {
+    return false // hors requête (script, cron)
+  }
 }
 
 export async function getLead(id: string): Promise<Lead | null> {

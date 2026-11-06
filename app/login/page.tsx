@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { GUIDE_VU } from '@/lib/guide'
+import { VISITE_VUE } from '@/components/VisiteGuidee'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -23,10 +23,10 @@ export default function LoginPage() {
     })
 
     if (res.ok) {
-      // Première connexion sur cet appareil : on commence par le Guide CRM
+      // Première connexion sur cet appareil : visite guidée du CRM
       let dejaVu = true
-      try { dejaVu = localStorage.getItem(GUIDE_VU) === '1' } catch {}
-      router.push(dejaVu ? '/' : '/guide?bienvenue=1')
+      try { dejaVu = localStorage.getItem(VISITE_VUE) === '1' } catch {}
+      router.push(dejaVu ? '/' : '/?visite=1')
       router.refresh()
     } else {
       const data = await res.json()

@@ -141,7 +141,7 @@ export default function ShowUpRow({ lead, faded }: { lead: Lead; faded: boolean 
   const present = presence === 'true'
 
   return (
-    <tr className={`hover:bg-gray-50 transition-colors ${faded ? 'opacity-50' : ''}`}>
+    <tr data-exemple={lead.id} className={`hover:bg-gray-50 transition-colors ${faded ? 'opacity-50' : ''}`}>
       <td className="px-4 py-3">
         <Link href={`/leads/${lead.id}`} className={`font-medium transition-colors hover:text-[#7d7212] ${present ? 'text-gray-900' : 'text-red-600'}`}>
           {lead.nom}
@@ -207,7 +207,7 @@ export function ShowUpCard({ lead, faded }: { lead: Lead; faded: boolean }) {
   const present = presence === 'true'
 
   return (
-    <div className={`rounded-xl border border-gray-200 bg-white p-4 space-y-3 shadow-sm ${faded ? 'opacity-50' : ''}`}>
+    <div data-exemple={lead.id} className={`rounded-xl border border-gray-200 bg-white p-4 space-y-3 shadow-sm ${faded ? 'opacity-50' : ''}`}>
       <div className="flex items-start justify-between gap-2">
         <div>
           <Link href={`/leads/${lead.id}`} className={`font-semibold hover:text-[#7d7212] ${present ? 'text-gray-900' : 'text-red-600'}`}>

@@ -106,7 +106,7 @@ export default async function RdvRelancesPage({ searchParams }: { searchParams: 
       </section>
 
       {/* ══════════ RELANCES ══════════ */}
-      <section id="relances">
+      <section id="relances" data-visite="relances">
         <div className="mb-4">
           <h2 className="text-3xl font-bold text-gray-900">
             🔁 Relances
@@ -243,7 +243,7 @@ const dernierContactStatic = (l: Lead): number | null => dernierContactLead(l.ap
 
 function RelanceRow({ lead, noShowBadge }: { lead: Lead; noShowBadge: boolean }) {
   return (
-    <tr className="hover:bg-gray-50 transition-colors">
+    <tr data-exemple={lead.id} className="hover:bg-gray-50 transition-colors">
       <td className="px-4 py-3">
         <Link href={`/leads/${lead.id}`} className="font-medium text-gray-900 hover:text-[#7d7212] transition-colors">
           {lead.nom}

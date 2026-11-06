@@ -153,7 +153,7 @@ export default async function RentabilitePage({ searchParams }: { searchParams: 
       )}
 
       {/* Mois en cours */}
-      <div className={`rounded-2xl border-2 p-6 shadow-sm mb-4 bg-white ${resultatM >= 0 ? 'border-green-500' : 'border-red-400'}`}>
+      <div data-visite="rentabilite" className={`rounded-2xl border-2 p-6 shadow-sm mb-4 bg-white ${resultatM >= 0 ? 'border-green-500' : 'border-red-400'}`}>
         <div className="flex items-center justify-between gap-3 flex-wrap mb-1">
           <p className="label-condensed">{labelMois(moisSel)}{estCourant ? ' — mois en cours' : ''}</p>
           {!estCourant && (

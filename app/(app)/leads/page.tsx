@@ -103,7 +103,7 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
             className="text-xs px-3 py-1.5 rounded-lg border border-gray-300 bg-white text-gray-600 hover:text-gray-900 hover:border-gray-500">
             ⬇ Export
           </a>
-          <Link href="/leads/nouveau" className="btn-primary text-sm">+ Nouveau</Link>
+          <Link href="/leads/nouveau" data-visite="nouveau" className="btn-primary text-sm">+ Nouveau</Link>
         </div>
       </div>
 
@@ -143,7 +143,7 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
         {/* Mobile : cartes */}
         <div className="md:hidden space-y-2">
           {filtered.map(lead => (
-            <div key={lead.id} className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm space-y-3">
+            <div key={lead.id} data-exemple={lead.id} className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm space-y-3">
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
                   <Link href={`/leads/${lead.id}`} className="font-semibold text-gray-900 hover:text-[#7d7212]">
@@ -162,24 +162,24 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
                   </p>
                 </div>
                 <div className="flex items-center gap-1">
-                  {vuePerdus ? <ReactiverButton leadId={lead.id} /> : <PerduButton leadId={lead.id} />}
+                  {vuePerdus ? <ReactiverButton leadId={lead.id} /> : <span data-visite="perdu"><PerduButton leadId={lead.id} /></span>}
                 </div>
               </div>
               {lead.telephone && (
                 <div className="flex items-center gap-1">
                   <a href={`tel:${lead.telephone}`} className="font-mono text-sm text-gray-700">{lead.telephone}</a>
                   <CopyButton text={lead.telephone} />
-                  {!vuePerdus && texteSms(lead) && <span className="ml-auto"><SmsButton leadId={lead.id} telephone={lead.telephone} texte={texteSms(lead)!} /></span>}
+                  {!vuePerdus && texteSms(lead) && <span data-visite="sms" className="ml-auto"><SmsButton leadId={lead.id} telephone={lead.telephone} texte={texteSms(lead)!} /></span>}
                 </div>
               )}
               {!vuePerdus && (
                 <>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <StatutLeadSelect leadId={lead.id} value={lead.statut} />
+                    <span data-visite="statut"><StatutLeadSelect leadId={lead.id} value={lead.statut} /></span>
                     <MobileNotes leadId={lead.id} value={lead.notes} nom={lead.nom} />
                   </div>
-                  <CallTracker leadId={lead.id} appels={lead.appels ?? []} statut={lead.statut} dateRelance={lead.date_relance}
-                    telephone={lead.telephone} smsApresAppel={texteSmsApresAppel(lead)} />
+                  <div data-visite="appel"><CallTracker leadId={lead.id} appels={lead.appels ?? []} statut={lead.statut} dateRelance={lead.date_relance}
+                    telephone={lead.telephone} smsApresAppel={texteSmsApresAppel(lead)} /></div>
                 </>
               )}
             </div>
@@ -203,7 +203,7 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
             </thead>
             <tbody className="divide-y divide-gray-100">
               {filtered.map((lead) => (
-                <tr key={lead.id} className="hover:bg-gray-50 transition-colors">
+                <tr key={lead.id} data-exemple={lead.id} className="hover:bg-gray-50 transition-colors">
                   <td className="px-4 py-3">
                     <Link href={`/leads/${lead.id}`} className="block hover:text-[#7d7212] transition-colors">
                       <span className="font-medium text-gray-900">{lead.nom}</span>
@@ -224,7 +224,7 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
                           {lead.telephone}
                         </a>
                         <CopyButton text={lead.telephone} />
-                        {!vuePerdus && texteSms(lead) && <span className="ml-2"><SmsButton leadId={lead.id} telephone={lead.telephone} texte={texteSms(lead)!} /></span>}
+                        {!vuePerdus && texteSms(lead) && <span data-visite="sms" className="ml-2"><SmsButton leadId={lead.id} telephone={lead.telephone} texte={texteSms(lead)!} /></span>}
                       </span>
                     ) : <span className="text-gray-300">—</span>}
                   </td>
@@ -239,11 +239,11 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
                   <td className="px-4 py-3 text-center">
                     {vuePerdus
                       ? <span className="text-xs text-gray-500">Perdu</span>
-                      : <StatutLeadSelect leadId={lead.id} value={lead.statut} />}
+                      : <span data-visite="statut" className="inline-block"><StatutLeadSelect leadId={lead.id} value={lead.statut} /></span>}
                   </td>
                   <td className="px-4 py-3">
-                    {!vuePerdus && <CallTracker leadId={lead.id} appels={lead.appels ?? []} statut={lead.statut} dateRelance={lead.date_relance}
-                      telephone={lead.telephone} smsApresAppel={texteSmsApresAppel(lead)} />}
+                    {!vuePerdus && <div data-visite="appel"><CallTracker leadId={lead.id} appels={lead.appels ?? []} statut={lead.statut} dateRelance={lead.date_relance}
+                      telephone={lead.telephone} smsApresAppel={texteSmsApresAppel(lead)} /></div>}
                   </td>
                   <td className="px-4 py-3 hidden xl:table-cell align-top min-w-[240px]">
                     <InlineNotes leadId={lead.id} value={lead.notes} />
@@ -253,7 +253,7 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
                   </td>
                   <td className="px-4 py-3 text-center">
                     <div className="flex items-center justify-center gap-1">
-                      {vuePerdus ? <ReactiverButton leadId={lead.id} /> : <PerduButton leadId={lead.id} />}
+                      {vuePerdus ? <ReactiverButton leadId={lead.id} /> : <span data-visite="perdu"><PerduButton leadId={lead.id} /></span>}
                     </div>
                   </td>
                 </tr>
