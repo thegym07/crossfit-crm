@@ -1,4 +1,4 @@
-// Contenu du Guide CRM (onglet « Guide CRM »), vérifié dans le code le 06/11/2026.
+// Contenu du Guide CRM (onglet « Guide CRM »), vérifié dans le code le 06/11/2026 (tarifs ajoutés le même jour).
 // À mettre à jour à chaque changement visible du CRM.
 
 /** Clé locale : le guide a déjà été ouvert sur cet appareil (sinon, la 1re connexion y mène). */
@@ -56,7 +56,7 @@ export const GUIDE: Guide = {
         "Pas encore de date ? Touche « 📅 Ajouter la date » (le bouton clignote) : écris le jour, choisis le mois et l'heure (de 9h à 21h, par quart d'heure), puis ✓. Pour changer une date, touche-la.",
         "Envoie le SMS proposé à côté du numéro : « 💬 Rappel » pour un RDV aujourd'hui ou demain, « 💬 Confirmer » pour un RDV plus tard.",
         "Après la séance, remplis la présence : « Oui ✓ » ou « Non » (sur téléphone : « Présent ✓ » ou « Absent »). Un absent part dans les relances « Post-séance » avec le badge « No-show ».",
-        "Si la personne était là, choisis le résultat : « Vente ✓ » (la vente est enregistrée), « À rappeler → » (elle part en « Post-séance ») ou « Refus » (elle sort de la liste).",
+        "Si la personne était là, choisis le résultat : « Vente ✓ » (choisis ensuite la formule dans le menu « Formule ? » : carte 10 séances, 2 séances/sem ou illimité, avec ou sans engagement 12 mois), « À rappeler → » (elle part en « Post-séance ») ou « Refus » (elle sort de la liste).",
         "« 🔁 Relances » a deux sous-onglets. « À rappeler » : jamais venus en salle, pas encore de RDV. « Post-séance » : déjà venus, ou absents à leur RDV. En haut : ceux jamais contactés (« Jamais » en rouge), puis ceux contactés il y a le plus longtemps.",
         "Appelle, puis clique « 📞 Relancé ». Le bouton « 💬 SMS » propose le bon message (après la séance, après une absence, ou simple relance). Le menu de suivi : « À appeler », « Pas de réponse », « RDV repris → » (la personne retourne dans « Rendez-vous », en « ⚠ Sans date fixée » : ajoute la date) ou « Pas intéressé ✕ » (elle passe en « Perdu » après ta confirmation). Le bouton « Perdu » marche aussi ici."
       ],
@@ -110,7 +110,7 @@ export const GUIDE: Guide = {
       "intro": "Pour voir si les pubs et les rappels rapportent plus qu'ils ne coûtent.",
       "etapes": [
         "Le gros chiffre = revenus du mois moins les dépenses : pub (10 € par jour, jusqu'à aujourd'hui pour le mois en cours), salaire (150 € par mois) et commissions bonus.",
-        "Les tarifs CrossFit ne sont pas encore renseignés : les ventes sont bien enregistrées, mais leur revenu n'est pas encore compté. Le bandeau jaune te le rappelle.",
+        "Les revenus viennent des ventes et de leur formule : carte 10 séances 130 €, 2 séances/sem 80 €/mois ou illimité 100 €/mois sans engagement, 2 séances/sem 65 €/mois ou illimité 85 €/mois avec engagement 12 mois (compté chaque mois pendant 12 mois). Une vente sans formule apparaît dans le bandeau jaune « vente sans formule » : choisis-la pour compter le revenu.",
         "« RDV pointés » : la part des RDV où la personne est venue. « Taux de vente » : la part des personnes venues qui ont acheté.",
         "« Mois par mois » : touche un mois pour l'afficher en grand, puis « ← Revenir au mois en cours »."
       ],

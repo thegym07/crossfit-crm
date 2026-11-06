@@ -254,7 +254,7 @@ export default async function RentabilitePage({ searchParams }: { searchParams: 
       </div>
 
       <p className="text-xs text-gray-400 mt-3">
-        Les abonnements 3/6/12 mois comptent leur mensualité chaque mois pendant la durée de l'engagement.
+        Les abonnements avec engagement 12 mois comptent leur mensualité chaque mois pendant 12 mois ; les formules sans engagement et la carte comptent une fois, le mois de la vente.
         Les dépenses du mois en cours courent jusqu'à aujourd'hui.
       </p>
     </div>

@@ -29,7 +29,13 @@ export const COMMISSION_PAR_RDV = 10   // € par RDV où le prospect était pr�
 // ── Activités proposées ── (pas d'agenda coachs : onglet retiré à la demande de Vincent le 06/11/2026)
 export const ACTIVITES = ['WOD (CrossFit)', 'Hyrox', 'ATHX'] as const
 
-// ── Formules vendues ──
+// ── Formules vendues (tarifs donnés par Vincent le 06/11/2026) ──
 // prix = montant unique, ou mensualité si duree > 1 (étalée sur la durée dans Rentabilité).
-// Tarifs CrossFit : à renseigner (non publics, formules personnalisées).
-export const OFFRES: Record<string, { label: string; prix: number; duree: number }> = {}
+// Sans engagement : compté 1 mois (la suite n'est pas suivie dans le CRM).
+export const OFFRES: Record<string, { label: string; prix: number; duree: number }> = {
+  'Carte 10 séances':            { label: 'Carte 10 séances — 130 €',                               prix: 130, duree: 1 },
+  '2 séances/sem sans engagement': { label: '2 séances/sem sans engagement — 80 €/mois',            prix: 80,  duree: 1 },
+  'Illimité sans engagement':    { label: 'Illimité sans engagement — 100 €/mois',                  prix: 100, duree: 1 },
+  '2 séances/sem 12 mois':       { label: '2 séances/sem engagement 12 mois — 65 €/mois (780 €)',   prix: 65,  duree: 12 },
+  'Illimité 12 mois':            { label: 'Illimité engagement 12 mois — 85 €/mois (1 020 €)',      prix: 85,  duree: 12 },
+}
