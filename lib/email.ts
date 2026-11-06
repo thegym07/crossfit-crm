@@ -3,19 +3,21 @@ import { SALLE } from './salle'
 
 // Envoi d'e-mails depuis la vraie boîte de la box (gratuit) : contact@lasallecrossfit.fr chez IONOS.
 // Variables d'environnement (Vercel) :
-//   SMTP_USER + SMTP_PASSWORD (mot de passe de la boîte IONOS) ; SMTP_HOST (défaut smtp.ionos.fr), SMTP_PORT (défaut 465)
+//   SMTP_PASSWORD (mot de passe de la boîte IONOS) suffit ; SMTP_USER (défaut contact@lasallecrossfit.fr),
+//   SMTP_HOST (défaut smtp.ionos.fr), SMTP_PORT (défaut 465) facultatifs.
 // Repli possible sur une boîte Gmail comme THE GYM : GMAIL_USER + GMAIL_APP_PASSWORD (mot de passe d'application).
 
 function config() {
-  if (process.env.SMTP_USER && process.env.SMTP_PASSWORD) {
+  if (process.env.SMTP_PASSWORD) {
     const port = Number(process.env.SMTP_PORT || 465)
+    const user = process.env.SMTP_USER || SALLE.email
     return {
-      user: process.env.SMTP_USER,
+      user,
       transport: nodemailer.createTransport({
         host: process.env.SMTP_HOST || 'smtp.ionos.fr',
         port,
         secure: port === 465,
-        auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASSWORD },
+        auth: { user, pass: process.env.SMTP_PASSWORD },
       }),
     }
   }
@@ -43,7 +45,7 @@ export type ResultatEmail = { ok: true } | { ok: false; erreur: string }
 
 export async function envoyerEmail(to: string | null | undefined, sujet: string, texte: string): Promise<ResultatEmail> {
   const c = config()
-  if (!c) return { ok: false, erreur: 'Envoi d’e-mails pas encore branché (SMTP_USER / SMTP_PASSWORD manquants)' }
+  if (!c) return { ok: false, erreur: 'Envoi d’e-mails pas encore branché (SMTP_PASSWORD manquant dans Vercel)' }
   if (!emailValide(to)) return { ok: false, erreur: 'Adresse e-mail invalide' }
 
   try {
