@@ -8,6 +8,7 @@ import CallTracker from '@/components/CallTracker'
 import PerduButton from '@/components/PerduButton'
 import ReactiverButton from '@/components/ReactiverButton'
 import { PREFIXE_PERTE } from '@/lib/supabase'
+import CopyButton from '@/components/CopyButton'
 
 export default function LeadDetailClient({ lead }: { lead: Lead }) {
   const router = useRouter()
@@ -64,12 +65,20 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
       <div className="space-y-4">
         <Section title="Contact">
           <Row label="Téléphone">
-            {lead.telephone ? <a href={`tel:${lead.telephone}`} className="text-blue-400 hover:underline">{lead.telephone}</a> : <Empty />}
+            {lead.telephone ? (
+              <span className="inline-flex items-center gap-1">
+                <a href={`tel:${lead.telephone}`} className="text-blue-400 hover:underline">{lead.telephone}</a>
+                <CopyButton text={lead.telephone} />
+              </span>
+            ) : <Empty />}
           </Row>
           <Row label="Email">
             {lead.email ? <a href={`mailto:${lead.email}`} className="text-blue-400 hover:underline">{lead.email}</a> : <Empty />}
           </Row>
-          <Row label="Source"><span className="text-gray-900">{lead.source || '—'}</span></Row>
+          <Row label="Source">
+            <span className="text-gray-900">{lead.source || '—'}</span>
+            {lead.origine && <span className="block text-xs text-gray-500 mt-0.5">{lead.origine}</span>}
+          </Row>
           {lead.statut === 'Perdu' && (
             <Row label="Perdu"><span className="text-gray-900">{lead.motif_relance?.startsWith(PREFIXE_PERTE) ? lead.motif_relance.slice(PREFIXE_PERTE.length) : 'motif non noté'}</span></Row>
           )}

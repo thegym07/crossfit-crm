@@ -17,13 +17,13 @@ const base = (id: string, nom: string, tel: string): Lead => ({
   id, nom, telephone: tel, email: null, source: 'Meta Ads', date_rdv: null, activite: null,
   rdv_honore: null, resultat_rdv: null, statut: 'Nouveau prospect', offre_souscrite: null, coach_assigne: null,
   date_relance: null, motif_relance: null, suivi_relance: null, notes: null, appels: [], vendu_le: null,
-  diagnostic: null, created_at: il_y_a(5 * 60 * 1000), updated_at: il_y_a(5 * 60 * 1000),
+  diagnostic: null, origine: null, meta_ids: [], created_at: il_y_a(5 * 60 * 1000), updated_at: il_y_a(5 * 60 * 1000),
 })
 
 export function exemplesVisite(): Lead[] {
   return [
     { ...base('exemple-julie', 'Julie Exemple', '0600000001'),
-      notes: 'Origine : pub « Ta 1re séance offerte » · formulaire « Séance offerte La salle CrossFit new »' },
+      origine: 'pub « Ta 1re séance offerte » · formulaire « Séance offerte La salle CrossFit new »' },
     { ...base('exemple-thomas', 'Thomas Exemple', '0600000002'), statut: 'Contacté sans réponse',
       created_at: il_y_a(96 * H), updated_at: il_y_a(72 * H), appels: [`${il_y_a(72 * H).replace(/\.\d+Z$/, '.000Z')}|nr`],
       date_relance: jourParis(0) },

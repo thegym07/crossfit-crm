@@ -60,7 +60,8 @@ const ETAPES: Etape[] = [
     route: '/leads', zone: ex('julie'), emoji: '👥', titre: 'Un nouveau prospect',
     texte: <>
       Les personnes qui remplissent la pub Facebook / Instagram arrivent <B>toutes seules</B> ici, en « Nouveau prospect »,
-      avec la pub d’origine dans les notes. <B>Il n’y a pas d’alerte</B> : ouvre le CRM plusieurs fois par jour.
+      avec leur nom et leur numéro (le bouton ⎘ le copie). La pub d’origine est sur leur fiche, sous « Source ».
+      <B>Il n’y a pas d’alerte</B> : ouvre le CRM plusieurs fois par jour.
       En haut de la liste : ceux à appeler aujourd’hui, les plus récents d’abord. Touche le numéro pour appeler.
     </>,
   },
