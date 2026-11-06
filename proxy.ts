@@ -14,6 +14,7 @@ export function proxy(request: NextRequest) {
     pathname === '/logo.png' ||
     pathname.startsWith('/api/auth') ||
     pathname.startsWith('/api/leads/meta') ||
+    pathname === '/api/leads/recents' ||
     pathname.startsWith('/api/inscription') ||
     pathname.startsWith('/api/cron') ||
     pathname.startsWith('/api/calendar') ||
