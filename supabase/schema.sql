@@ -141,6 +141,8 @@ CREATE INDEX IF NOT EXISTS leads_telephone_idx ON leads(telephone);
 -- Sécurité : RLS activée sur toutes les tables, sans policy. L'app passe uniquement par la clé
 -- service role (serveur), la clé publique « anon » ne peut rien lire.
 
--- Notification « nouveau prospect » activée d'office vers la boîte de la box
-INSERT INTO reglages (cle, valeur) VALUES ('emailProspects', '{"actif": true, "email": "contact@lasallecrossfit.fr"}')
+-- Pas d'e-mail « nouveau prospect » (choix de Vincent : le commercial consulte le CRM)
+INSERT INTO reglages (cle, valeur) VALUES ('emailProspects', '{"actif": false, "email": "contact@lasallecrossfit.fr"}')
 ON CONFLICT (cle) DO NOTHING;
+
+-- Compte de connexion de l'équipe (lib/compte.ts) : { "identifiant": "...", "hash": "<bcrypt>" } dans reglages, clé 'compte'.

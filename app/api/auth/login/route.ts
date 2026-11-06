@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import { creerSession, SESSION_COOKIE, SESSION_DUREE_S } from '@/lib/session'
+import { getCompte } from '@/lib/compte'
 
 export async function POST(request: NextRequest) {
   const { username, password } = await request.json()
@@ -13,12 +14,17 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Identifiants manquants' }, { status: 400 })
   }
 
-  if (username !== validUsername) {
-    return NextResponse.json({ error: 'Identifiants incorrects' }, { status: 401 })
-  }
-
+  // Compte enregistré en base (prioritaire) : identifiant sans tenir compte des majuscules ni des espaces autour
+  const compte = await getCompte()
   let passwordValid = false
-  if (validPasswordHash) {
+  if (compte) {
+    if (String(username).trim().toLowerCase() !== compte.identifiant.toLowerCase()) {
+      return NextResponse.json({ error: 'Identifiants incorrects' }, { status: 401 })
+    }
+    passwordValid = await bcrypt.compare(String(password), compte.hash)
+  } else if (username !== validUsername) {
+    return NextResponse.json({ error: 'Identifiants incorrects' }, { status: 401 })
+  } else if (validPasswordHash) {
     passwordValid = await bcrypt.compare(password, validPasswordHash)
   } else if (validPasswordPlain) {
     // Fallback: comparaison directe (pour dev, utiliser ADMIN_PASSWORD_HASH en prod)
