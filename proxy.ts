@@ -10,6 +10,7 @@ export function proxy(request: NextRequest) {
   const isPublicPath =
     pathname === '/login' ||
     pathname === '/inscription' ||
+    pathname === '/essai' ||
     pathname === '/confidentialite' ||
     pathname === '/logo.png' ||
     pathname.startsWith('/api/auth') ||

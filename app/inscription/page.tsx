@@ -1,11 +1,19 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { ACTIVITES } from '@/lib/supabase'
 
+const MOMENTS = ['Le matin', 'Le midi', 'L’après-midi', 'En fin de journée'] as const
+
 export default function InscriptionPage() {
-  const [form, setForm] = useState({ nom: '', telephone: '', email: '', activite: '', message: '' })
+  const [form, setForm] = useState({ nom: '', telephone: '', email: '', activite: '', moment: '', message: '' })
+  const [src, setSrc] = useState('')
+
+  // D'où vient le prospect : /essai?src=google, google-post, site… (enregistré dans « origine »)
+  useEffect(() => {
+    setSrc(new URLSearchParams(window.location.search).get('src') ?? '')
+  }, [])
   const [loading, setLoading] = useState(false)
   const [done, setDone] = useState(false)
   const [error, setError] = useState('')
@@ -18,12 +26,13 @@ export default function InscriptionPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!form.nom.trim()) { setError('Indique ton nom, s’il te plaît'); return }
+    if (form.telephone.replace(/\D/g, '').length < 9) { setError('Indique ton numéro de téléphone pour qu’on puisse te rappeler'); return }
     setLoading(true)
     setError('')
     const res = await fetch('/api/inscription', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
+      body: JSON.stringify({ ...form, src }),
     })
     setLoading(false)
     if (res.ok) setDone(true)
@@ -73,8 +82,8 @@ export default function InscriptionPage() {
           </div>
 
           <div>
-            <label className="block text-sm text-gray-600 mb-1.5 font-medium">Téléphone</label>
-            <input name="telephone" value={form.telephone} onChange={handleChange} type="tel" className="input-field" placeholder="06 12 34 56 78" />
+            <label className="block text-sm text-gray-600 mb-1.5 font-medium">Téléphone *</label>
+            <input name="telephone" value={form.telephone} onChange={handleChange} type="tel" required className="input-field" placeholder="06 12 34 56 78" />
           </div>
 
           <div>
@@ -91,6 +100,14 @@ export default function InscriptionPage() {
           </div>
 
           <div>
+            <label className="block text-sm text-gray-600 mb-1.5 font-medium">Quand préfères-tu qu’on t’appelle ?</label>
+            <select name="moment" value={form.moment} onChange={handleChange} className="input-field">
+              <option value="">— Peu importe —</option>
+              {MOMENTS.map(m => <option key={m} value={m}>{m}</option>)}
+            </select>
+          </div>
+
+          <div>
             <label className="block text-sm text-gray-600 mb-1.5 font-medium">Message (optionnel)</label>
             <textarea name="message" value={form.message} onChange={handleChange} className="input-field w-full min-h-[80px] resize-y" placeholder="Tes disponibilités, tes objectifs…" />
           </div>
@@ -98,6 +115,11 @@ export default function InscriptionPage() {
           <button type="submit" disabled={loading} className="w-full btn-primary py-3 rounded-xl disabled:opacity-50 text-base">
             {loading ? 'Envoi…' : 'Je réserve ma séance offerte'}
           </button>
+
+          <p className="text-xs text-gray-400 text-center leading-relaxed">
+            En envoyant ce formulaire, tu acceptes que La Salle CrossFit te rappelle au sujet de ta séance d’essai.{' '}
+            <a href="/confidentialite" className="underline">Confidentialité</a>
+          </p>
         </form>
       </div>
     </div>

@@ -20,6 +20,16 @@ export async function POST(request: NextRequest) {
 
   const activite = (ACTIVITES as readonly string[]).includes(body.activite) ? (body.activite as Lead['activite']) : null
 
+  // Provenance (/essai?src=…) : lisible sur la fiche prospect, sous « Source »
+  const ORIGINES: Record<string, string> = {
+    google: 'Fiche Google', 'google-post': 'Post Google', 'google-produit': 'Produit Google', site: 'Site lasallecrossfit.fr',
+  }
+  const src = String(body.src ?? '').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 30)
+  const origine = src ? (ORIGINES[src] ?? `Lien « ${src} »`) : 'Page séance d’essai'
+  const MOMENTS = ['Le matin', 'Le midi', 'L’après-midi', 'En fin de journée']
+  const moment = MOMENTS.includes(body.moment) ? body.moment : ''
+  const notes = [moment && `Préfère être rappelé(e) : ${moment.toLowerCase()}`, body.message?.trim()].filter(Boolean).join('\n') || null
+
   const cree = await createLead({
     nom,
     telephone: normaliserTel(body.telephone),
@@ -27,7 +37,8 @@ export async function POST(request: NextRequest) {
     source: 'Formulaire web',
     activite,
     statut: 'Nouveau prospect',
-    notes: body.message?.trim() || null,
+    notes,
+    origine,
   })
   await notifierNouveauProspect(cree)
 
