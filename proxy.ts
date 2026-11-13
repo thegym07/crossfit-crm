@@ -13,6 +13,7 @@ export function proxy(request: NextRequest) {
     pathname === '/essai' ||
     pathname === '/confidentialite' ||
     pathname === '/logo.png' ||
+    pathname.startsWith('/google/') ||   // images publiques des posts Google (récupérées par l'éditeur de la fiche)
     pathname.startsWith('/api/auth') ||
     pathname.startsWith('/api/leads/meta') ||
     pathname.startsWith('/api/inscription') ||
