@@ -23,6 +23,9 @@ export async function POST(request: NextRequest) {
   // Provenance (/essai?src=…) : lisible sur la fiche prospect, sous « Source »
   const ORIGINES: Record<string, string> = {
     google: 'Fiche Google', 'google-post': 'Post Google', 'google-produit': 'Produit Google', site: 'Site lasallecrossfit.fr', facebook: 'Page Facebook',
+    'facebook-post': 'Publication Facebook', instagram: 'Bio Instagram', story: 'Story Instagram', qr: 'QR code',
+    'site-fiche': 'Site, venu de la fiche Google', 'site-google': 'Site, venu d’une recherche Google', 'site-fb': 'Site, venu de Facebook',
+    'site-ig': 'Site, venu d’Instagram', 'site-direct': 'Site, accès direct', 'site-autre': 'Site, venu d’un autre site',
   }
   const src = String(body.src ?? '').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 30)
   const origine = src ? (ORIGINES[src] ?? `Lien « ${src} »`) : 'Page séance d’essai'
